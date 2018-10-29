@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+	      point="net.jazz.ajax.webBundles">
+	</extension>
+	<extension
+	      point="com.ibm.team.workitem.web.editorToolbarAction">
+	      <action
+             action="com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction.ui.EmailWorkItem"
+             iconContext="com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction"
+             iconDisabledUri="images/icons/email-icon.png"
+             iconUri="images/icons/email-icon.png"
+             id="com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction"
+             isMenuAction="true"
+             label="Email Work Item">
+	      </action>
+	</extension>
+
+	<extension point="net.jazz.ajax.cssBindingSets">
+		<cssBindingSet id="com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction" path="">
+        	<cssBinding jsModule="com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction.ui.EmailWorkItem">
+                <cssModule path="/ui/EmailWorkItem.css"/>
+            </cssBinding>
+        </cssBindingSet>
+    </extension>
+</plugin>

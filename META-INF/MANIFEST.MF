@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RTC Email Work Item Action
+Bundle-SymbolicName: com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Siemens Building Technologies
+Bundle-Localization: plugin
