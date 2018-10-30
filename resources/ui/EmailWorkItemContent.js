@@ -68,10 +68,15 @@ define([
 
         // Strip HTML tags from a string
         _getTextValue: function (textWithHtml) {
+            // Replace br tags with new lines
             textWithHtml = textWithHtml.replace(/<br\s*[\/]?>/gi, "\n");
+
+            // Create a div containing the HTML of the passed in string
             var div = domConstruct.create("div", {
                 innerHTML: textWithHtml
             });
+
+            // Get the text without the HTML tags
             return dataDom.textContent(div);
         }
     });
