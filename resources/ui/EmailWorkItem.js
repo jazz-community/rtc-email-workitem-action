@@ -39,7 +39,7 @@ define([
         // Called when the enabled button was clicked
         run: function (params) {
             // Create the content widget
-            var emailWorkItemContent = new EmailWorkItemContent();
+            var emailWorkItemContent = new EmailWorkItemContent({ workingCopy: this.workingCopy });
 
             // Create the hover view and pass in the content widget
             this._createHoverView(emailWorkItemContent);
