@@ -1,5 +1,7 @@
 define([
     "dojo/_base/declare",
+    "dojo/dom-construct",
+    "dojox/data/dom",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -7,7 +9,7 @@ define([
     "dijit/focus",
     "dojo/text!./EmailWorkItemContent.html",
     "dojo/domReady!"
-], function (declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
+], function (declare, domConstruct, dataDom, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
         templateString: template,
         workingCopy: null,
@@ -48,7 +50,11 @@ define([
                             path: ["attributes", attributeName]
                         });
 
-                        visibleAttribute.value = value && value.label || value && value.content;
+                        if (value && value.label) {
+                            visibleAttribute.value = value.label;
+                        } else if (value && value.content) {
+                            visibleAttribute.value = this._getTextValue(value.content);
+                        }
 
                         if (visibleAttribute.value) {
                             visibleAttributes.push(visibleAttribute);
@@ -58,6 +64,15 @@ define([
             }
 
             return visibleAttributes;
+        },
+
+        // Strip HTML tags from a string
+        _getTextValue: function (textWithHtml) {
+            textWithHtml = textWithHtml.replace(/<br\s*[\/]?>/gi, "\n");
+            var div = domConstruct.create("div", {
+                innerHTML: textWithHtml
+            });
+            return dataDom.textContent(div);
         }
     });
 });
