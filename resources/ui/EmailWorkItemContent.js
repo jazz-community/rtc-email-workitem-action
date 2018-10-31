@@ -53,13 +53,12 @@ define([
 
         // Create the string to use as the email subject
         _createSubjectString: function () {
-            var subject = "Emailing Work Item: ";
-            subject += this._getVisibleAttributeValue("workItemType");
-            subject += " ";
+            var subject = "[Work Item ";
             subject += this._getVisibleAttributeValue("id");
-            subject += " (";
+            subject += "] ";
+            subject += this._getVisibleAttributeValue("workItemType");
+            subject += ": ";
             subject += this._getVisibleAttributeValue("summary");
-            subject += ")";
 
             return subject;
         },
