@@ -16,6 +16,7 @@ define([
         templateString: template,
         workingCopy: null,
         visibleAttributes: null,
+        newLine: "\n",
 
         constructor: function (params) {
             this.workingCopy = params.workingCopy;
@@ -50,6 +51,7 @@ define([
             return "mailto:?to=&subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
         },
 
+        // Create the string to use as the email subject
         _createSubjectString: function () {
             var subject = "Emailing Work Item: ";
             subject += this._getVisibleAttributeValue("workItemType");
@@ -62,20 +64,21 @@ define([
             return subject;
         },
 
+        // Create a plain text string with the summary and description for the email body
         _createBasicBodyString: function () {
-            var newLine = "\n";
             var body = this._getVisibleAttributeValue("workItemType");
             body += " ";
             body += this._getVisibleAttributeValue("id");
-            body += newLine.repeat(2);
+            body += this.newLine.repeat(2);
             body += "Web Url: " + this.workingCopy.object.locationUri;
-            body += newLine.repeat(2);
-            body += this._createBodyLabelValueString(this._getVisibleAttributeLabel("summary") + ": ", this._getVisibleAttributeValue("summary"));
-            body += this._createBodyLabelValueString(this._getVisibleAttributeLabel("description") + ": ", this._getVisibleAttributeValue("description"), true);
+            body += this.newLine.repeat(2);
+            body += this._createLabelValueString("summary");
+            body += this._createLabelValueString("description", true);
 
             return body;
         },
 
+        // Create a plain text string with the labels and values of the additional attributes
         _createAdditionalBodyString: function () {
             var excludedAttributes = ["id", "workItemType", "summary", "description"];
             var body = "";
@@ -87,21 +90,30 @@ define([
                     return;
                 }
 
-                body += this._createBodyLabelValueString(this._getVisibleAttributeLabel(attribute.id) + ": ", this._getVisibleAttributeValue(attribute.id));
+                body += this._createLabelValueStringFromAttribute(attribute);
             }, this);
 
             return body;
         },
 
-        _createBodyLabelValueString: function (label, value, multiLine) {
-            var newLine = "\n";
-            var result = label;
+        _createLabelValueString: function (attributeId, multiLine) {
+            var attribute = this._getVisibleAttribute(attributeId);
 
-            if (multiLine) {
-                result += newLine;
+            return this._createLabelValueStringFromAttribute(attribute, multiLine);
+        },
+
+        _createLabelValueStringFromAttribute: function (attribute, multiLine) {
+            var result = "";
+
+            if (attribute) {
+                result += attribute.label + ": ";
+
+                if (multiLine) {
+                    result += this.newLine;
+                }
+
+                result += attribute.value + this.newLine.repeat(2);
             }
-
-            result += value + newLine.repeat(2);
 
             return result;
         },
@@ -113,12 +125,6 @@ define([
             });
 
             return visibleAttribute;
-        },
-
-        _getVisibleAttributeLabel: function (attributeId) {
-            var visibleAttribute = this._getVisibleAttribute(attributeId);
-
-            return visibleAttribute && visibleAttribute.label || "";
         },
 
         _getVisibleAttributeValue: function (attributeId) {
