@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/array",
     "dojo/dom-attr",
     "dojo/dom-construct",
     "dojox/data/dom",
@@ -10,7 +11,7 @@ define([
     "dijit/focus",
     "dojo/text!./EmailWorkItemContent.html",
     "dojo/domReady!"
-], function (declare, domAttr, domConstruct, dataDom, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
+], function (declare, array, domAttr, domConstruct, dataDom, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
         templateString: template,
         workingCopy: null,
@@ -34,12 +35,96 @@ define([
             this._setMailtoLink();
         },
 
+        // Set the link href based on the work item data
         _setMailtoLink: function () {
-            domAttr.set(this.mailtoLink, "href", this._createMailtoHref("test subject", "test body"));
+            var subject = this._createSubjectString();
+            var body = this._createBasicBodyString();
+
+            // Only add the additional string when the radio button is set to "full"
+            body += this._createAdditionalBodyString();
+            domAttr.set(this.mailtoLink, "href", this._createMailtoHref(subject, body));
         },
 
+        // Put the subject and body into a mailto string
         _createMailtoHref: function (subject, body) {
             return "mailto:?to=&subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        },
+
+        _createSubjectString: function () {
+            var subject = "Emailing Work Item: ";
+            subject += this._getVisibleAttributeValue("workItemType");
+            subject += " ";
+            subject += this._getVisibleAttributeValue("id");
+            subject += " (";
+            subject += this._getVisibleAttributeValue("summary");
+            subject += ")";
+
+            return subject;
+        },
+
+        _createBasicBodyString: function () {
+            var newLine = "\n";
+            var body = this._getVisibleAttributeValue("workItemType");
+            body += " ";
+            body += this._getVisibleAttributeValue("id");
+            body += newLine.repeat(2);
+            body += "Web Url: " + this.workingCopy.object.locationUri;
+            body += newLine.repeat(2);
+            body += this._createBodyLabelValueString(this._getVisibleAttributeLabel("summary") + ": ", this._getVisibleAttributeValue("summary"));
+            body += this._createBodyLabelValueString(this._getVisibleAttributeLabel("description") + ": ", this._getVisibleAttributeValue("description"), true);
+
+            return body;
+        },
+
+        _createAdditionalBodyString: function () {
+            var excludedAttributes = ["id", "workItemType", "summary", "description"];
+            var body = "";
+
+            array.forEach(this.visibleAttributes, function (attribute) {
+                if (array.some(excludedAttributes, function (excludedAttribute) {
+                    return excludedAttribute === attribute.id;
+                })) {
+                    return;
+                }
+
+                body += this._createBodyLabelValueString(this._getVisibleAttributeLabel(attribute.id) + ": ", this._getVisibleAttributeValue(attribute.id));
+            }, this);
+
+            return body;
+        },
+
+        _createBodyLabelValueString: function (label, value, multiLine) {
+            var newLine = "\n";
+            var result = label;
+
+            if (multiLine) {
+                result += newLine;
+            }
+
+            result += value + newLine.repeat(2);
+
+            return result;
+        },
+
+        _getVisibleAttribute: function (attributeId) {
+            // Change this to not use "find" so that it will work in internet explorer
+            var visibleAttribute = this.visibleAttributes.find(function (attribute) {
+                return attribute.id === attributeId;
+            });
+
+            return visibleAttribute;
+        },
+
+        _getVisibleAttributeLabel: function (attributeId) {
+            var visibleAttribute = this._getVisibleAttribute(attributeId);
+
+            return visibleAttribute && visibleAttribute.label || "";
+        },
+
+        _getVisibleAttributeValue: function (attributeId) {
+            var visibleAttribute = this._getVisibleAttribute(attributeId);
+
+            return visibleAttribute && visibleAttribute.value || "";
         },
 
         // Gets a list of all attributes that have a value

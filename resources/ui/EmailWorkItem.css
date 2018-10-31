@@ -1,4 +1,11 @@
 .emailWorkItemContentContainer {
-    width: 150px;
+    box-sizing: border-box;
+    width: 300px;
     padding: 10px;
+}
+
+.emailWorkItemContentContainer
+.emailWorkItemContentMailToLink {
+    display: inline-block;
+    padding-top: 20px;
 }
