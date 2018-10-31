@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/dom-attr",
     "dojo/dom-construct",
     "dojox/data/dom",
     "dijit/_WidgetBase",
@@ -9,7 +10,7 @@ define([
     "dijit/focus",
     "dojo/text!./EmailWorkItemContent.html",
     "dojo/domReady!"
-], function (declare, domConstruct, dataDom, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
+], function (declare, domAttr, domConstruct, dataDom, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
         templateString: template,
         workingCopy: null,
@@ -28,29 +29,17 @@ define([
             // away the _onBlur event will be raised. This will cause the
             // containing hover view to be destroyed and removed from the dom.
             focus.focus(this.domNode);
+
+            // Set the mailto link
+            this._setMailtoLink();
         },
 
-        _onOpenEmailClick: function () {
-
+        _setMailtoLink: function () {
+            domAttr.set(this.mailtoLink, "href", this._createMailtoHref("test subject", "test body"));
         },
 
-        // Open the local email client with the specified subject and body pre filled
-        _openEmailClient: function (subject, body) {
-            // Create a form with the mailto link
-            var form = domConstruct.create("form", {
-                "method": "post",
-                "enctype": "text/plain",
-                "style": {
-                    "display": "none"
-                },
-                "action": ""
-            }, document.body);
-
-            // Submit the form to open the link
-            form.submit();
-
-            // Remove the form from the dom
-            domConstruct.destroy(form);
+        _createMailtoHref: function (subject, body) {
+            return "mailto:?to=&subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
         },
 
         // Gets a list of all attributes that have a value
