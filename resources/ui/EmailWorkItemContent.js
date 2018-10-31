@@ -30,6 +30,29 @@ define([
             focus.focus(this.domNode);
         },
 
+        _onOpenEmailClick: function () {
+
+        },
+
+        // Open the local email client with the specified subject and body pre filled
+        _openEmailClient: function (subject, body) {
+            // Create a form with the mailto link
+            var form = domConstruct.create("form", {
+                "method": "post",
+                "enctype": "text/plain",
+                "style": {
+                    "display": "none"
+                },
+                "action": ""
+            }, document.body);
+
+            // Submit the form to open the link
+            form.submit();
+
+            // Remove the form from the dom
+            domConstruct.destroy(form);
+        },
+
         // Gets a list of all attributes that have a value
         _getVisibleAttributesFromWorkItem: function (workingCopy) {
             var allAttributes = workingCopy.object.attributes;
