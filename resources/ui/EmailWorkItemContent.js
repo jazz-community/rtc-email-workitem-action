@@ -1,8 +1,12 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
+    "dojo/_base/lang",
+    "dojo/dom",
     "dojo/dom-attr",
     "dojo/dom-construct",
+    "dojo/on",
+    "dojo/query",
     "dojox/data/dom",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -11,7 +15,9 @@ define([
     "dijit/focus",
     "dojo/text!./EmailWorkItemContent.html",
     "dojo/domReady!"
-], function (declare, array, domAttr, domConstruct, dataDom, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin, focus, template) {
+], function (declare, array, lang, dom, domAttr, domConstruct, on, query, dataDom,
+    _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin,
+    focus, template) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
         templateString: template,
         workingCopy: null,
@@ -37,6 +43,10 @@ define([
 
             // Set the mailto link in the dom
             this._setMailtoLink();
+
+            // Set the mailto link whenever a radio button is clicked
+            query(".emailWorkItemContentRadioContainer .emailWorkItemContentRadio input[name=emailFormat]", this.domNode)
+                .on("click", lang.hitch(this, this._setMailtoLink));
         },
 
         // Set the link href based on the work item data
@@ -47,8 +57,11 @@ define([
             // Get the basic version of the email body string
             var body = this._createBasicBodyString();
 
-            // Only add the additional string when the radio button is set to "full"
-            body += this._createAdditionalBodyString();
+            // Check if the "Full" radio button is selected
+            if (domAttr.get(dom.byId("emailWorkItemFullChoice"), "checked")) {
+                // Add the additional string to the email body
+                body += this._createAdditionalBodyString();
+            }
 
             // Set the mailto link with the subject and body as the target of
             // the link in the dom.
