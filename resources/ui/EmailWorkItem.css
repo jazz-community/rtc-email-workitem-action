@@ -1,14 +1,17 @@
+/* Set the hover view width and add some padding */
 .emailWorkItemContentContainer {
     box-sizing: border-box;
     width: 300px;
     padding: 10px;
 }
 
+/* Make the title text bold */
 .emailWorkItemContentContainer
 .emailWorkItemContentTitle {
     font-weight: bold;
 }
 
+/* Add a border around the radio buttons */
 .emailWorkItemContentContainer
 .emailWorkItemContentRadioContainer {
     border: 1px solid lightgray;
@@ -16,6 +19,7 @@
     margin-top: 10px;
 }
 
+/* Add padding to the radio buttons */
 .emailWorkItemContentContainer
 .emailWorkItemContentRadio {
     display: inline-block;
@@ -23,11 +27,13 @@
     padding-right: 10px;
 }
 
+/* Align the button to the right */
 .emailWorkItemContentContainer
 .emailWorkItemContentButtonContainer {
     text-align: right;
 }
 
+/* Add some padding to the button */
 .emailWorkItemContentContainer
 .emailWorkItemContentMailToLink {
     display: inline-block;
