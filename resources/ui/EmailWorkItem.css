@@ -4,6 +4,22 @@
     padding: 10px;
 }
 
+.emailWorkItemContentTitle {
+    font-weight: bold;
+}
+
+.emailWorkItemContentRadioContainer {
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.emailWorkItemContentRadio {
+    display: inline-block;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
 .emailWorkItemContentContainer
 .emailWorkItemContentMailToLink {
     display: inline-block;

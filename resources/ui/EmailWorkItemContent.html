@@ -1,5 +1,16 @@
 <div class="emailWorkItemContentContainer">
-    <div>Send Work Item as Email</div>
+    <div class="emailWorkItemContentTitle">Send Work Item as Email</div>
+    <div class="emailWorkItemContentRadioContainer">
+        <div>Choose the type of email:</div>
+        <div class="emailWorkItemContentRadio">
+            <input type="radio" id="emailWorkItemBasicChoice" name="emailFormat" value="basic" checked>
+            <label for="emailWorkItemBasicChoice">Basic</label>
+        </div>
+        <div class="emailWorkItemContentRadio">
+            <input type="radio" id="emailWorkItemFullChoice" name="emailFormat" value="full">
+            <label for="emailWorkItemFullChoice">Full</label>
+        </div>
+    </div>
     <a data-dojo-attach-point="mailtoLink" class="emailWorkItemContentMailToLink">
         <button class="primary-button">Open Email Client</button>
     </a>
