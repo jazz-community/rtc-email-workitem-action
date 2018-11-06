@@ -30,9 +30,6 @@ define([
 
             // Get a list of all work item attributes that have values
             this.visibleAttributes = this._getVisibleAttributesFromWorkItem(this.workingCopy);
-
-            console.log("this.workingCopy: ", this.workingCopy);
-            console.log("this.visibleAttributes: ", this.visibleAttributes);
         },
 
         startup: function () {
@@ -197,9 +194,6 @@ define([
                 if (allAttributes.hasOwnProperty(attributeName)) {
                     // Get the attribute definition from the working copy using the attribute name
                     var attributeDefinition = workingCopy.getAttribute(attributeName);
-
-                    console.log("attributeName: ", attributeName);
-                    console.log("attributeDefinition: ", attributeDefinition);
 
                     // Check if we got an attribute definition
                     if (attributeDefinition) {
