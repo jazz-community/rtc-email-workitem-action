@@ -4,16 +4,19 @@
     padding: 10px;
 }
 
+.emailWorkItemContentContainer
 .emailWorkItemContentTitle {
     font-weight: bold;
 }
 
+.emailWorkItemContentContainer
 .emailWorkItemContentRadioContainer {
     border: 1px solid lightgray;
     padding: 10px;
     margin-top: 10px;
 }
 
+.emailWorkItemContentContainer
 .emailWorkItemContentRadio {
     display: inline-block;
     padding-top: 10px;
@@ -21,7 +24,12 @@
 }
 
 .emailWorkItemContentContainer
+.emailWorkItemContentButtonContainer {
+    text-align: right;
+}
+
+.emailWorkItemContentContainer
 .emailWorkItemContentMailToLink {
     display: inline-block;
-    padding-top: 20px;
+    padding-top: 10px;
 }
