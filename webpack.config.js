@@ -1,4 +1,5 @@
 const JazzUpdateSitePlugin = require('jazz-update-site-webpack-plugin');
+const DisableOutputWebpackPlugin = require('disable-output-webpack-plugin');
 const moment = require('moment');
 const packageJson = require('./package.json');
 
@@ -10,6 +11,7 @@ module.exports = (env) => {
             app: './index.js',
         },
         plugins: [
+            new DisableOutputWebpackPlugin(),
             new JazzUpdateSitePlugin({
                 appType: 'ccm',
                 projectId: 'com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction',

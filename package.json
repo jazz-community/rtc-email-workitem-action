@@ -4,6 +4,7 @@
     "description": "Email Work Item with the Local Client",
     "main": "./resources/ui/EmailWorkItem.js",
     "devDependencies": {
+        "disable-output-webpack-plugin": "^1.0.1",
         "jazz-update-site-webpack-plugin": "^0.4.1",
         "moment": "^2.22.2",
         "webpack": "^4.16.2",
