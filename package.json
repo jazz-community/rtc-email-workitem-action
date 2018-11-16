@@ -1,0 +1,31 @@
+{
+    "name": "com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction",
+    "version": "1.0.0",
+    "description": "Email Work Item with the Local Client",
+    "main": "./resources/ui/EmailWorkItem.js",
+    "devDependencies": {
+        "jazz-update-site-webpack-plugin": "^0.4.1",
+        "moment": "^2.22.2",
+        "webpack": "^4.16.2",
+        "webpack-cli": "^3.1.0"
+    },
+    "scripts": {
+        "build": "webpack --config ./webpack.config.js --mode production"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MartinBenninger/rtc-email-workitem-action.git"
+    },
+    "keywords": [
+        "Jazz",
+        "RTC",
+        "Work Item",
+        "Email"
+    ],
+    "author": "Martin Benninger, Siemens AG",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/MartinBenninger/rtc-email-workitem-action/issues"
+    },
+    "homepage": "https://github.com/MartinBenninger/rtc-email-workitem-action#readme"
+}

@@ -1,0 +1,11 @@
+*.iml
+*.jazzignore
+*.log
+*.swp
+.idea/
+.vscode/
+/com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction*.zip
+deployment-properties.ini
+dist/
+jbe-build-wrapper.xml
+node_modules/
