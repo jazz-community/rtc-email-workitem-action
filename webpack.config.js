@@ -8,7 +8,7 @@ module.exports = (env) => {
     const version = (typeof env !== 'undefined' && (packageJson.version + "_" + env.buildUUID)) || packageJson.version + timestamp;
     const config = {
         entry: {
-            app: './index.js',
+            app: './index.js'
         },
         plugins: [
             new DisableOutputWebpackPlugin(),
@@ -18,14 +18,14 @@ module.exports = (env) => {
                 acceptGlobPattern: [
                     'resources/**',
                     'META-INF/**',
-                    'plugin.xml',
+                    'plugin.xml'
                 ],
                 projectInfo: {
                     author: packageJson.author,
                     copyright: packageJson.author,
                     description: packageJson.description,
                     license: packageJson.license,
-                    version: version,
+                    version: version
                 }
             })
         ]
