@@ -88,10 +88,8 @@ define([
 
         // Create a plain text string with the summary and description for the email body
         _createBasicBodyString: function () {
-            var body = this._getVisibleAttributeValue("workItemType");
-            body += " ";
-            body += this._getVisibleAttributeValue("id");
-            body += this.newLine.repeat(2);
+            var body = this._createLabelValueString("workItemType");
+            body += this._createLabelValueString("id");
             body += "Web Url: " + this.workingCopy.object.locationUri;
             body += this.newLine.repeat(2);
             body += this._createLabelValueString("summary");
