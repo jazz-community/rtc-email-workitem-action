@@ -23,6 +23,7 @@ define([
         workingCopy: null,
         visibleAttributes: null,
         newLine: "\n",
+        tabChar: "\t",
 
         constructor: function (params) {
             // Get the working copy object from the parameters
@@ -93,7 +94,15 @@ define([
             body += this._createLabelValueString("id");
             body += this._createLabelValueString("workItemType");
             body += this._createLabelValueString("summary");
-            body += this._createLabelValueString("description", true);
+            body += this._createLabelValueStringFromAttribute({
+                id: "teamArea",
+                label: "Team Area",
+                value: this.workingCopy.getValue({
+                    path: ["attributes", "teamArea", "label"]
+                })
+            });
+            body += this._createLabelValueString("category");
+            body += this._createLabelValueString("internalState");
 
             // The basic email body only contains the type, id, url, summary, and description
             return body;
@@ -102,8 +111,10 @@ define([
         // Create a plain text string with the labels and values of the additional attributes
         _createAdditionalBodyString: function () {
             // Exclude some attributes because they are already in the basic body string
-            var excludedAttributes = ["id", "workItemType", "summary", "description"];
+            var excludedAttributes = ["id", "workItemType", "summary", "description", "teamArea", "category", "internalState"];
             var body = "";
+
+            body += this._createLabelValueString("description", true);
 
             // Iterate over all attributes in the visible attributes list
             array.forEach(this.visibleAttributes, function (attribute) {
@@ -138,6 +149,11 @@ define([
 
             // Leave the result empty if the attribute is missing
             if (attribute) {
+                if (multiLine) {
+                    // Start with a new line if in multiline mode
+                    result += this.newLine;
+                }
+
                 // Add the attribute label to the result
                 result += attribute.label + ": ";
 
@@ -153,6 +169,11 @@ define([
 
                 // Add the attribute value followed by a new line to the result
                 result += attribute.value + this.newLine;
+
+                if (multiLine) {
+                    // End with an extra new line if in multiline mode
+                    result += this.newLine;
+                }
             }
 
             // Return the result in the following format:
