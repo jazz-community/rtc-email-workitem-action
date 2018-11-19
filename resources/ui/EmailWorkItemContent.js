@@ -91,7 +91,7 @@ define([
             var body = this._createLabelValueString("workItemType");
             body += this._createLabelValueString("id");
             body += "Web Url: " + this.workingCopy.object.locationUri;
-            body += this.newLine.repeat(2);
+            body += this.newLine;
             body += this._createLabelValueString("summary");
             body += this._createLabelValueString("description", true);
 
@@ -148,8 +148,8 @@ define([
                     result += this.newLine;
                 }
 
-                // Add the attribute value followed by two new lines to the result
-                result += attribute.value + this.newLine.repeat(2);
+                // Add the attribute value followed by a new line to the result
+                result += attribute.value + this.newLine;
             }
 
             // Return the result in the following format:
