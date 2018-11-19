@@ -23,7 +23,7 @@ define([
         workingCopy: null,
         visibleAttributes: null,
         newLine: "\n",
-        tabChar: "\t",
+        tabChar: "\t ",
 
         constructor: function (params) {
             // Get the working copy object from the parameters
@@ -94,6 +94,8 @@ define([
             body += this._createLabelValueString("id");
             body += this._createLabelValueString("workItemType");
             body += this._createLabelValueString("summary");
+
+            // Create the team area attribute manually because it doesn't have an attribute definition
             body += this._createLabelValueStringFromAttribute({
                 id: "teamArea",
                 label: "Team Area",
@@ -104,7 +106,7 @@ define([
             body += this._createLabelValueString("category");
             body += this._createLabelValueString("internalState");
 
-            // The basic email body only contains the type, id, url, summary, and description
+            // The basic email body only contains a few attributes
             return body;
         },
 
@@ -115,6 +117,11 @@ define([
             var body = "";
 
             body += this._createLabelValueString("description", true);
+
+            // Sort the attributes alphabetically by label
+            this.visibleAttributes.sort(function (a, b) {
+                return a.label.localeCompare(b.label);
+            });
 
             // Iterate over all attributes in the visible attributes list
             array.forEach(this.visibleAttributes, function (attribute) {
