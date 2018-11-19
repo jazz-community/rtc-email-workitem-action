@@ -146,6 +146,9 @@ define([
                     // Add a new line between the label and value
                     // if the multi line parameter is true
                     result += this.newLine;
+                } else {
+                    // Add a tab before the value if it's not multiline
+                    result += this.tabChar;
                 }
 
                 // Add the attribute value followed by a new line to the result
