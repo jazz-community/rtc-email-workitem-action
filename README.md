@@ -14,7 +14,7 @@ Simply click the email icon in the work item action toolbar. You'll see a popup 
 
 After choosing the mode, click the `Open Email Client` button to open your email client (e.g. Outlook).
 
-(screenshot)
+![Basic Email Example](https://github.com/jazz-community/rtc-email-workitem-action/blob/master/documentation/basic-email-example.png)
 
 You can then choose who to send it to and optionally edit the text.
 
