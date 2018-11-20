@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- 8
+script:
+- npm run build
+deploy:
+  provider: releases
+  api_key:
+    secure: KSQu27OVgRHMJIDXdJD4BYh8q2v2gERUvcPgXA5VkePF3d7wt32zSc3F/pvPyxht+hJ8dntuhNYFampzpEh2jb1ALdJmOXhSoK1zmg8RIDRZtHVAAUxynehKNcRrvHuE5jBqObl8by3mnjAtp2458LBswegRMx9QiqTKzApMoS48q1oPzYzC7jRZo4H935Uz07yoZMr9LoGnKon81a17KP/rxjEF1XDA5ryG5OQpvII0x0svjDzERRe7RUz+XsJxlOTNxcvwY74du5fI4ExQiaSiHohP1eIlEYENN7CisI5NFDkf3BvxdIGyVHB0dd81nsAPPwPvBSIAzmeGcfzoVhiuawDUw9UBjW8SgWO5fs6zlILgXWicnnZZW2E5UPuUwTTV/2tCnK0s61Up/C/QKxgx+a4/zA21mz9quCwcZlxz9eYLILZQeeuU0ey4dZ0wTXvGGhdAyD40ZlT6LzvZQRhsN96/mHYseofe0+rbUDo2sGub0q6NcddGFCTJoV+dIwNjz0ZKklQPy+rkFfCQW8nrzi/fDbL74GS2wzpfhmsNnBcpDkbrUyjeeHLYYxVRrCa2+e3cxx0LGYDBba8wOcBVbOHPscwm+xCTBdKK0KXeb4gGIF1j3qFoEN3l78DIhUucr7LFEbsOV1UFCQotw8rk0ZKttAuuLT12iFSLsGQ=
+  file: com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction*.zip
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: jazz-community/rtc-email-workitem-action
