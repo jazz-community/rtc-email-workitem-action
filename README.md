@@ -4,7 +4,8 @@
 Have you ever wanted to send an RTC work item as an email? Maybe you need to send it to someone that doesn't even have an account on your Jazz server? You can now do that using this plugin.
 
 This plugin provides a work item toolbar action for sending the work item using the local email client.
-(screenshot)
+
+![Overview](https://github.com/jazz-community/rtc-email-workitem-action/blob/master/documentation/email-work-item-action.png)
 
 ## Usage
 Simply click the email icon in the work item action toolbar. You'll see a popup with two options `Basic` and `Full`.
