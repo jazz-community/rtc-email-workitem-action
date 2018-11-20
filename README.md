@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jazz-community/rtc-email-workitem-action.svg?branch=master)](https://travis-ci.org/jazz-community/rtc-email-workitem-action)
+
 # Email Work Item Action for RTC
 Have you ever wanted to send an RTC work item as an email? Maybe you need to send it to someone that doesn't even have an account on your Jazz server? You can now do that using this plugin.
 
