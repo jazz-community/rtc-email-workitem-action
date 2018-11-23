@@ -15,6 +15,7 @@ define([
     return declare("com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction.ui.EmailWorkItem",
         com.ibm.team.workitem.web.ui2.internal.action.AbstractAction,
     {
+        contentWidth: 300, // Pixel width of the content. Needs to match what is set with CSS.
         buttonNode: null,
 
         // Call the inherited constructor
@@ -59,12 +60,12 @@ define([
         // and set the content to the specified widget
         _createHoverView: function (content) {
             // Get the position of the action button
-            var domNodePosition = ViewUtils.getDomNodePosition(this.buttonNode);
+            var buttonPosition = ViewUtils.getDomNodePosition(this.buttonNode);
 
             // Create the hover view
             return new HoverView({
-                x: domNodePosition.x,
-                y: domNodePosition.y,
+                x: buttonPosition.x - this.contentWidth,
+                y: buttonPosition.y,
                 content: content
             }, null);
         }
