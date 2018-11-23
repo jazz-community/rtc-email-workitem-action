@@ -70,7 +70,19 @@ define([
         _createMailtoHref: function (subject, body) {
             // Encode any special characters in the subject and body before
             // adding them to the mailto string.
-            return "mailto:?to=&subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+            var mailtoLink = "mailto:?to=&subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+            // Truncate the link if it's longer than 2000 characters (for cross OS and browser compatibility)
+            if (mailtoLink.length > 2000) {
+                // Cut the string at the last new line character within the 2000 limit
+                mailtoLink = mailtoLink.slice(0, mailtoLink.lastIndexOf(encodeURIComponent(this.newLine), 2000));
+
+                // Add "..." to the end of the email if the text has been truncated.
+                // Yes, this could end up slightly longer than 2000 characters but should still be ok.
+                mailtoLink += encodeURIComponent(this.newLine + "...");
+            }
+
+            return mailtoLink;
         },
 
         // Create the string to use as the email subject
