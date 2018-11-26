@@ -7,7 +7,6 @@ define([
     "dojo/dom-construct",
     "dojo/on",
     "dojo/query",
-    "dojox/data/dom",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -15,7 +14,7 @@ define([
     "dijit/focus",
     "dojo/text!./EmailWorkItemContent.html",
     "dojo/domReady!"
-], function (declare, array, lang, dom, domAttr, domConstruct, on, query, dataDom,
+], function (declare, array, lang, dom, domAttr, domConstruct, on, query,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin,
     focus, template) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
@@ -274,16 +273,22 @@ define([
 
         // Strip HTML tags from a string
         _getTextValue: function (textWithHtml) {
-            // Replace br tags with new lines
-            textWithHtml = textWithHtml.replace(/<br\s*[\/]?>/gi, "\n");
-
             // Create a div containing the HTML of the passed in string
             var div = domConstruct.create("div", {
                 innerHTML: textWithHtml
             });
 
-            // Get the text without the HTML tags
-            return dataDom.textContent(div);
+            // Add to the dom so that innerText will have the correct rendering
+            document.body.appendChild(div);
+
+            // Save the rendered innerText as a string
+            var innerText = div.innerText;
+
+            // Remove from the dom again
+            document.body.removeChild(div);
+
+            // Return the text as it would be rendered in the browser
+            return innerText;
         }
     });
 });
