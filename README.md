@@ -19,6 +19,10 @@ After choosing the mode, click the `Open Email Client` button to open your email
 
 You can then choose who to send it to and optionally edit the text.
 
+### FAQ
+- Nothing happens when I click the `Open Email Client` button. What's the problem?
+  - A common cause is that the operating system isn't configured correctly for opening mailto links. Here are [instructions for setting the local email client for Windows](https://kb.wisc.edu/helpdesk/page.php?id=170).
+
 ## Setup
 
 ### Download
