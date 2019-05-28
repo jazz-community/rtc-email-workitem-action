@@ -28,7 +28,9 @@ define([
                     // Parse the configuration as JSON
                     this.configuration = json.parse(params.actionSpec.parameter);
                 }
-            } catch {
+            } catch (error) {
+                console.log("EmailWorkItem Error getting the configuration from the action specification. Message: " + error);
+
                 // Reset the configuration if parsing fails
                 this.configuration = null;
             }
