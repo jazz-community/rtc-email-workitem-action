@@ -13,7 +13,8 @@
              iconUri="images/icons/email-icon.png"
              id="com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction"
              isMenuAction="true"
-             label="Email Work Item">
+             label="Email Work Item"
+             parameter='{ "toAttributes": [{ "attributeId": "com.siemens.bt.attribute.createdonbehalfof" }]}'>
 	      </action>
 	</extension>
 
