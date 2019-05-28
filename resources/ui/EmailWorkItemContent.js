@@ -20,6 +20,7 @@ define([
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
         templateString: template,
         workingCopy: null,
+        configuration: null,
         visibleAttributes: null,
         newLine: "\n",
         tabChar: "\t ",
@@ -27,6 +28,9 @@ define([
         constructor: function (params) {
             // Get the working copy object from the parameters
             this.workingCopy = params.workingCopy;
+
+            // Get the configuration from the parameters (can be null)
+            this.configuration = params.configuration;
 
             // Get a list of all work item attributes that have values
             this.visibleAttributes = this._getVisibleAttributesFromWorkItem(this.workingCopy);
@@ -48,6 +52,9 @@ define([
 
         // Set the link href based on the work item data
         _setMailtoLink: function () {
+            // Get the email to string
+            var to = this._createToString();
+
             // Get the email subject string
             var subject = this._createSubjectString();
 
@@ -62,14 +69,16 @@ define([
 
             // Set the mailto link with the subject and body as the target of
             // the link in the dom.
-            domAttr.set(this.mailtoLink, "href", this._createMailtoHref(subject, body));
+            domAttr.set(this.mailtoLink, "href", this._createMailtoHref(to, subject, body));
         },
 
-        // Put the subject and body into a mailto string
-        _createMailtoHref: function (subject, body) {
+        // Put the to, subject and body into a mailto string
+        _createMailtoHref: function (to, subject, body) {
             // Encode any special characters in the subject and body before
             // adding them to the mailto string.
-            var mailtoLink = "mailto:?to=&subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+            var mailtoLink = "mailto:" + (to ? encodeURIComponent(to) + "?" : "?to=&")
+                + "subject=" + encodeURIComponent(subject)
+                + "&body=" + encodeURIComponent(body);
 
             // Truncate the link if it's longer than 2000 characters (for cross OS and browser compatibility)
             if (mailtoLink.length > 2000) {
@@ -82,6 +91,34 @@ define([
             }
 
             return mailtoLink;
+        },
+
+        // Create the string to use as the email to
+        _createToString: function () {
+            var to = "";
+
+            // Check if we have a configuration with attributes to use for the email to
+            if (this.configuration && this.configuration.toAttributes && this.configuration.toAttributes.length) {
+                // Iterate over all configured to attributes until one is found with a non empty value in the work item
+                array.some(this.configuration.toAttributes, function (toAttribute) {
+                    // Iterate over all the visible attributes from the work item
+                    if (array.some(this.visibleAttributes, function (visibleAttribute) {
+                        // Check if the work item attribute has the same id as the configured attribute and has a value
+                        if (visibleAttribute.id === toAttribute.attributeId && visibleAttribute.value) {
+                            // Use the work item attribute value as the email address
+                            to = visibleAttribute.value;
+
+                            // Early exit the visible attributes loop
+                            return true;
+                        }
+                    })) {
+                        // Early exit the configuration to attributes loop
+                        return true;
+                    }
+                }, this);
+            }
+
+            return to;
         },
 
         // Create the string to use as the email subject
