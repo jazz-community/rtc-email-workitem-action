@@ -1,11 +1,12 @@
 define([
     "dojo/_base/declare",
+    "dojo/json",
     "./EmailWorkItemContent",
     "com.ibm.team.rtc.foundation.web.ui.views.HoverView",
     "com.ibm.team.rtc.foundation.web.ui.views.ViewUtils",
     "com.ibm.team.workitem.web.ui2.internal.action.AbstractAction",
     "dojo/domReady!"
-], function (declare, EmailWorkItemContent) {
+], function (declare, json, EmailWorkItemContent) {
     // Note that all of the above imports of ibm classes will log an error to the console but the classes are still loaded.
     // Using dojo.require doesn't log an error but also doesn't require the module when using AMD syntax.
     var HoverView = com.ibm.team.rtc.foundation.web.ui.views.HoverView;
@@ -17,9 +18,21 @@ define([
     {
         contentWidth: 300, // Pixel width of the content. Needs to match what is set with CSS.
         buttonNode: null,
+        configuration: null,
 
         // Call the inherited constructor
         constructor: function (params) {
+            // Try to get the configuration from the parameter in the action specification
+            try {
+                if (params && params.actionSpec && params.actionSpec.parameter) {
+                    // Parse the configuration as JSON
+                    this.configuration = json.parse(params.actionSpec.parameter);
+                }
+            } catch {
+                // Reset the configuration if parsing fails
+                this.configuration = null;
+            }
+
             this.inherited(arguments);
         },
 
@@ -40,7 +53,10 @@ define([
         // Called when the enabled button was clicked
         run: function (params) {
             // Create the content widget
-            var emailWorkItemContent = new EmailWorkItemContent({ workingCopy: this.workingCopy });
+            var emailWorkItemContent = new EmailWorkItemContent({
+                workingCopy: this.workingCopy,
+                configuration: this.configuration
+            });
 
             // Create the hover view and pass in the content widget
             this._createHoverView(emailWorkItemContent);
