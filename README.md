@@ -52,3 +52,5 @@ For general contribution guidelines, please refer to [CONTRIBUTING.md](https://g
 ## Licensing
 Copyright (c) Siemens AG. All rights reserved.  
 Licensed under the [MIT](https://github.com/jazz-community/rtc-email-workitem-action/blob/master/LICENSE) License.
+
+[The email icon](https://github.com/jazz-community/rtc-email-workitem-action/blob/master/resources/images/icons/email-icon.png) by [Font Awesome](https://fontawesome.com/) is used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) / Changed the color to blue
