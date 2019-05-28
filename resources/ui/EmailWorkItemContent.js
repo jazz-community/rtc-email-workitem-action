@@ -20,7 +20,7 @@ define([
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _FocusMixin], {
         templateString: template,
         workingCopy: null,
-        configuration: null,
+        configuration: null, // { "toAttributes": [{ "attributeId": "real.attribute.id" }]}
         visibleAttributes: null,
         newLine: "\n",
         tabChar: "\t ",
@@ -93,7 +93,9 @@ define([
             return mailtoLink;
         },
 
-        // Create the string to use as the email to
+        // Create the string to use as the email to. This will be left empty if the configuration to attributes is empty.
+        // The first attribute from the configuration that also has a value in the work item will be used.
+        // The value from the work item attribute will be used as the to email address (no validation is done).
         _createToString: function () {
             var to = "";
 
