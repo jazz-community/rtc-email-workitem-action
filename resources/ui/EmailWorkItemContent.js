@@ -76,8 +76,8 @@ define([
         _createMailtoHref: function (to, subject, body) {
             // Encode any special characters in the subject and body before
             // adding them to the mailto string.
-            var mailtoLink = "mailto:" + (to ? encodeURIComponent(to) + "?" : "?to=&")
-                + "subject=" + encodeURIComponent(subject)
+            var mailtoLink = "mailto:" + (to ? encodeURIComponent(to) : "")
+                + "?subject=" + encodeURIComponent(subject)
                 + "&body=" + encodeURIComponent(body);
 
             // Truncate the link if it's longer than 2000 characters (for cross OS and browser compatibility)
