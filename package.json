@@ -8,8 +8,8 @@
         "jazz-update-site-webpack-plugin": "^0.4.1",
         "moment": "^2.24.0",
         "remove-files-webpack-plugin": "^1.4.0",
-        "webpack": "^4.42.0",
-        "webpack-cli": "^3.3.11"
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
     },
     "scripts": {
         "build": "webpack --config ./webpack.config.js --mode production"
